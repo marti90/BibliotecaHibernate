@@ -14,6 +14,13 @@ public class Gestione {
 		return u;
 	}
 	
+	public Utente leggiUtente(String nome, String cognome){
+		
+		Utente u = uDao.readUtente(nome, cognome);
+		
+		return u;
+	}
+	
 	public boolean aggiungiUtente(String nome, String cognome, String cf){
 		
 		boolean res = false;
@@ -24,6 +31,28 @@ public class Gestione {
 		return res;
 	}
 	
+	public boolean modificaUtente(String nomeVecchio, String cognomeVecchio, String nomeNuovo, String cognomeNuovo, String cf){
+		
+		boolean res = false;
+		
+		Utente u = this.leggiUtente(nomeVecchio,cognomeVecchio);
+		u.setNome(nomeNuovo);
+		u.setCognome(cognomeNuovo);
+		u.setCf(cf);
+		res = uDao.updateUtente(u);
+		
+		return res;
+	}
 	
+	public boolean cancellaUtente(String nome, String cognome){
+		
+        boolean res = false;
+		
+		Utente u = this.leggiUtente(nome,cognome);
+		
+		res = uDao.deleteUtente(u);
+		
+		return res;
+	}
 
 }

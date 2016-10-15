@@ -10,9 +10,15 @@ public class MainEsempio {
 		
 		//System.out.println("L'utente è stato aggiunto? "+g.aggiungiUtente("Martina", "Debernardi", "DBRMTN90A"));
 		
-		Utente u = g.leggiUtente(2);
+		Utente u = g.leggiUtente("Marti", "Debe");
 		
-		System.out.print(u.getNome()+" "+u.getCognome());
+		System.out.print(u.getCf());
+		
+		//g.modificaUtente(1, "Marti", "Debe", "MRTDB");
+		
+		System.out.println("L'utente è stato cancellato? "+g.cancellaUtente("Marti", "Debe"));
+		
+		
 
 	}
 

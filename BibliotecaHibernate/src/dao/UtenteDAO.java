@@ -47,7 +47,7 @@ public class UtenteDAO {
 			tx = session.getTransaction();
 			tx.begin();
 			
-			query = session.createQuery("from Utente where nome =: nomeInserito and cognome =: cognomeInserito");
+			query = session.createQuery("from Utente where nome =:nomeInserito and cognome =:cognomeInserito");
 			query.setString("nomeInserito", nome);
 			query.setString("cognomeInserito", cognome);
 			u = (Utente) query.uniqueResult();
@@ -92,6 +92,60 @@ public class UtenteDAO {
 		return res;
 	}
 	
+	public boolean updateUtente(Utente u){
+
+		boolean res = false;
+		
+		Session session = HibernateUtility.openSession();
+		Transaction tx = null;
+		
+		try{
+			tx = session.getTransaction();
+			tx.begin();
+			
+			session.update(u);
+			res= true;
+			
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();
+			
+		}finally{
+			session.close();
+			
+		}
+		
+		return res;
+		
+	}
 	
+	public boolean deleteUtente(Utente u){
+        
+		boolean res = false;
+		
+		Session session = HibernateUtility.openSession();
+		Transaction tx = null;
+		
+		try{
+			tx = session.getTransaction();
+			tx.begin();
+			
+			session.delete(u);
+			res= true;
+			
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();
+			
+		}finally{
+			session.close();
+			
+		}
+		
+		return res;
+		
+	}
 
 }
