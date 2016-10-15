@@ -1,11 +1,14 @@
 package service;
 
+import model.Libro;
 import model.Utente;
+import dao.LibroDAO;
 import dao.UtenteDAO;
 
 public class Gestione {
 	
 	UtenteDAO uDao = new UtenteDAO();
+	LibroDAO lDao = new LibroDAO();
 	
 	public Utente leggiUtente(long id_utente){
 		
@@ -54,5 +57,53 @@ public class Gestione {
 		
 		return res;
 	}
+	
+    public Libro leggiLibro(long id_libro){
+		
+		Libro l = lDao.readLibro(id_libro);
+		
+		return l;
+	}
+	
+	public Libro leggiLibro(String titolo){
+		
+		Libro l = lDao.readLibro(titolo);
+		
+		return l;
+	}
+	
+	public boolean aggiungiLibro(String titolo, String autore){
+		
+		boolean res = false;
+		
+		Libro l = new Libro(titolo,autore);
+		res = lDao.createLibro(l);
+		
+		return res;
+	}
+	
+	public boolean modificaLibro(String titoloVecchio,String titoloNuovo, String autoreNuovo){
+		
+		boolean res = false;
+		
+		Libro l = this.leggiLibro(titoloVecchio);
+		l.setTitolo(titoloNuovo);
+		l.setAutore(autoreNuovo);
+		res = lDao.updateLibro(l);
+		
+		return res;
+	}
+	
+	public boolean cancellaLibro(String titolo){
+		
+        boolean res = false;
+		
+		Libro l = this.leggiLibro(titolo);
+		
+		res = lDao.deleteLibro(l);
+		
+		return res;
+	}
+
 
 }

@@ -32,8 +32,7 @@ public class Libro {
 		
 	}
 	
-	public Libro(long id_libro, String titolo, String autore) {
-		this.id_libro = id_libro;
+	public Libro(String titolo, String autore) {
 		this.titolo = titolo;
 		this.autore = autore;
 	}
