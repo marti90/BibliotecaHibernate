@@ -33,8 +33,7 @@ public class Utente {
 		
 	}
 	
-	public Utente(long id_utente, String nome, String cognome, String cf) {
-		this.id_utente = id_utente;
+	public Utente(String nome, String cognome, String cf) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.cf = cf;
