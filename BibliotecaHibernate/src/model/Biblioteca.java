@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 public class Biblioteca {
 	
@@ -22,20 +25,22 @@ public class Biblioteca {
 	private String nome;
 	
 	@ManyToMany
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<Utente> utenti = new HashSet<Utente>();
 	
 	@ManyToMany
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<Libro> libri = new HashSet<Libro>();
 	
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="biblioteca",cascade=CascadeType.ALL)
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Set<Prestito> prestitiB = new HashSet<Prestito>();
 
 	public Biblioteca(){
 		
 	}
 	
-	public Biblioteca(long id_biblioteca, String nome) {
-		this.id_biblioteca = id_biblioteca;
+	public Biblioteca(String nome) {
 		this.nome = nome;
 	}
 
@@ -83,8 +88,16 @@ public class Biblioteca {
 		this.utenti.add(u);
 	}
 	
+	public void deleteUtente(Utente u){
+		this.utenti.remove(u);
+	}
+	
 	public void addLibro(Libro l){
 		this.libri.add(l);
+	}
+	
+	public void deleteLibro(Libro l){
+		this.libri.remove(l);
 	}
 	
 	public void addPrestito(Prestito p){
