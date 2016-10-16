@@ -21,6 +21,8 @@ public class Libro {
 	
 	private String titolo;
 	private String autore;
+	private int copieTotali = 0;
+	private int copieDisponibili = 0;
 	
 	@ManyToMany(mappedBy="libri",cascade=CascadeType.ALL)
 	private Set<Biblioteca> bibliotecheL = new HashSet<Biblioteca>();
@@ -59,6 +61,22 @@ public class Libro {
 
 	public void setAutore(String autore) {
 		this.autore = autore;
+	}
+
+	public int getCopieTotali() {
+		return copieTotali;
+	}
+
+	public void setCopieTotali(int copieTotali) {
+		this.copieTotali = copieTotali;
+	}
+
+	public int getCopieDisponibili() {
+		return copieDisponibili;
+	}
+
+	public void setCopieDisponibili(int copieDisponibili) {
+		this.copieDisponibili = copieDisponibili;
 	}
 
 	public Set<Biblioteca> getBibliotecheL() {

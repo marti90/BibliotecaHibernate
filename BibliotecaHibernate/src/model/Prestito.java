@@ -30,8 +30,7 @@ public class Prestito {
 		
 	}
 	
-	public Prestito(long id_prestito, Date dataPrestito) {
-		this.id_prestito = id_prestito;
+	public Prestito(Date dataPrestito) {
 		this.dataPrestito = dataPrestito;
 	}
 

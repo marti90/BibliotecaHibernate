@@ -1,10 +1,14 @@
 package service;
 
+import java.util.Date;
+
 import model.Biblioteca;
 import model.Libro;
+import model.Prestito;
 import model.Utente;
 import dao.BibliotecaDAO;
 import dao.LibroDAO;
+import dao.PrestitoDAO;
 import dao.UtenteDAO;
 
 public class Gestione {
@@ -12,22 +16,23 @@ public class Gestione {
 	UtenteDAO uDao = new UtenteDAO();
 	LibroDAO lDao = new LibroDAO();
 	BibliotecaDAO bDao = new BibliotecaDAO();
+	PrestitoDAO pDao = new PrestitoDAO();
 	
-	public Utente leggiUtente(long id_utente){
+	public Utente trovaUtente(long id_utente){
 		
 		Utente u = uDao.readUtente(id_utente);
 		
 		return u;
 	}
 	
-	public Utente leggiUtente(String nome, String cognome){
+	public Utente trovaUtente(String nome, String cognome){
 		
 		Utente u = uDao.readUtente(nome, cognome);
 		
 		return u;
 	}
 	
-	public boolean aggiungiUtente(Biblioteca b, String nome, String cognome, String cf){
+	public boolean registraUtente(Biblioteca b, String nome, String cognome, String cf){
 		
 		boolean res = false;
 		
@@ -44,7 +49,7 @@ public class Gestione {
 		
 		boolean res = false;
 		
-		Utente u = this.leggiUtente(nomeVecchio,cognomeVecchio);
+		Utente u = this.trovaUtente(nomeVecchio,cognomeVecchio);
 		u.setNome(nomeNuovo);
 		u.setCognome(cognomeNuovo);
 		u.setCf(cf);
@@ -57,7 +62,7 @@ public class Gestione {
 		
         boolean res = false;
 		
-		Utente u = this.leggiUtente(nome,cognome);
+		Utente u = this.trovaUtente(nome,cognome);
 		res = uDao.deleteUtente(u);
 		b.deleteUtente(u);
 		bDao.updateBiblioteca(b);
@@ -65,29 +70,35 @@ public class Gestione {
 		return res;
 	}
 	
-    public Libro leggiLibro(long id_libro){
+    public Libro trovaLibro(long id_libro){
 		
 		Libro l = lDao.readLibro(id_libro);
 		
 		return l;
 	}
 	
-	public Libro leggiLibro(String titolo){
+	public Libro trovaLibro(String titolo){
 		
 		Libro l = lDao.readLibro(titolo);
 		
 		return l;
 	}
 	
-	public boolean aggiungiLibro(Biblioteca b, String titolo, String autore){
+	public boolean registraLibro(Biblioteca b, String titolo, String autore, int copieDaRegistrare){
 		
 		boolean res = false;
 		
-		Libro l = new Libro(titolo,autore);
-		res = lDao.createLibro(l);
-		l.addBiblioteca(b);
-		b.addLibro(l);
-		bDao.updateBiblioteca(b);
+		if(this.trovaLibro(titolo) != null){
+			this.trovaLibro(titolo).setCopieTotali(this.trovaLibro(titolo).getCopieTotali()+copieDaRegistrare);
+			this.trovaLibro(titolo).setCopieDisponibili(this.trovaLibro(titolo).getCopieDisponibili()+copieDaRegistrare);
+			res = true;
+		} else {
+			Libro l = new Libro(titolo,autore);
+			res = lDao.createLibro(l);
+			l.addBiblioteca(b);
+			b.addLibro(l);
+			bDao.updateBiblioteca(b);
+		}
 		
 		return res;
 	}
@@ -96,7 +107,7 @@ public class Gestione {
 		
 		boolean res = false;
 		
-		Libro l = this.leggiLibro(titoloVecchio);
+		Libro l = this.trovaLibro(titoloVecchio);
 		l.setTitolo(titoloNuovo);
 		l.setAutore(autoreNuovo);
 		res = lDao.updateLibro(l);
@@ -108,7 +119,7 @@ public class Gestione {
 		
         boolean res = false;
 		
-		Libro l = this.leggiLibro(titolo);
+		Libro l = this.trovaLibro(titolo);
 		res = lDao.deleteLibro(l);
 		b.deleteLibro(l);
 		bDao.updateBiblioteca(b);
@@ -123,6 +134,65 @@ public class Gestione {
 		
 		return b;
 	}
+	
+	public Biblioteca trovaBiblioteca(long id_biblioteca){
+		
+		Biblioteca b = bDao.readBiblioteca(id_biblioteca);
+		
+		return b;
+	}
+	
+	public Biblioteca trovaBiblioteca(String nome){
+		
+		Biblioteca b = bDao.readBiblioteca(nome);
+		
+		return b;
+	}
+	
+	public boolean modificaBiblioteca(String nomeVecchio, String nomeNuovo){
+		
+		boolean res = false;
+		Biblioteca b = this.trovaBiblioteca(nomeVecchio);
+		b.setNome(nomeNuovo);
+		res = bDao.updateBiblioteca(b);
+		
+		return res;
+	}
+	
+	public boolean cancellaBiblioteca(String nome){
+		
+		boolean res = false;
+		Biblioteca b = this.trovaBiblioteca(nome);
+		res = bDao.deleteBiblioteca(b);
+		
+		return res;
+	}
+	
+	public boolean prestaLibro(Biblioteca b, String nome, String cognome, String titolo){
+		
+		boolean res = false;
+		Utente u = uDao.readUtente(nome, cognome);
+		Libro l = lDao.readLibro(titolo);
+		
+		if(u != null && l != null && l.getCopieDisponibili()>0){
+			Date d = new Date();
+			java.sql.Date dSql = new java.sql.Date(d.getTime());
+			Prestito p = new Prestito (dSql);
+			p.setBiblioteca(b);
+			p.setU(u);
+			p.setLibro(l);
+			b.addPrestito(p);
+			u.addPrestito(p);
+			l.addPrestito(p);
+			l.setCopieDisponibili(l.getCopieDisponibili()-1);
+			bDao.updateBiblioteca(b);
+			res = true;
+		}
+		
+		return res;
+	}
+	
+	
 
 
 }

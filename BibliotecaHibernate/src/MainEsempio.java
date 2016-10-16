@@ -1,3 +1,5 @@
+
+
 import model.Biblioteca;
 //import model.Utente;
 import service.Gestione;
@@ -21,15 +23,15 @@ public class MainEsempio {
 		
 		//System.out.println("L'utente è stato cancellato? "+g.cancellaUtente(b, "Marti", "Debe"));
 		
-		g.aggiungiUtente(b, "Martina", "Debernardi", "DBRMTN90A");
-		g.aggiungiUtente(b, "Luca", "Umoretto", "MRTLCA90C");
-		g.aggiungiUtente(b, "Irene", "Aimone", "MNERNE90B");
+		g.registraUtente(b, "Martina", "Debernardi", "DBRMTN90A");
+		g.registraUtente(b, "Luca", "Umoretto", "MRTLCA90C");
+		g.registraUtente(b, "Irene", "Aimone", "MNERNE90B");
 		
-		g.aggiungiLibro(b, "Cent'anni di solitudine", "Gabriel Garcia Marquez");
-		g.aggiungiLibro(b, "Delitto e castigo", "Fedor Dostoevskij");
-		g.aggiungiLibro(b, "Anna Karenina", "Lev Tolstoj");
-		g.aggiungiLibro(b, "Il processo", "Franz Kafka");
-
+		g.registraLibro(b, "Cent'anni di solitudine", "Gabriel Garcia Marquez",2);
+		g.registraLibro(b, "Delitto e castigo", "Fedor Dostoevskij",5);
+		g.registraLibro(b, "Anna Karenina", "Lev Tolstoj",1);
+		g.registraLibro(b, "Il processo", "Franz Kafka",2);
+		
 	}
 
 }
