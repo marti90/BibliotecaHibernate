@@ -16,6 +16,7 @@ public class Prestito {
 	private long id_prestito;
 	
 	private Date dataPrestito;
+	private Date dataRestituzione;
 	
 	@ManyToOne
 	private Utente utente;
@@ -48,6 +49,14 @@ public class Prestito {
 
 	public void setDataPrestito(Date dataPrestito) {
 		this.dataPrestito = dataPrestito;
+	}
+
+	public Date getDataRestituzione() {
+		return dataRestituzione;
+	}
+
+	public void setDataRestituzione(Date dataRestituzione) {
+		this.dataRestituzione = dataRestituzione;
 	}
 
 	public Utente getUtente() {

@@ -94,6 +94,8 @@ public class Gestione {
 			res = true;
 		} else {
 			Libro l = new Libro(titolo,autore);
+			l.setCopieTotali(copieDaRegistrare);
+			l.setCopieDisponibili(copieDaRegistrare);
 			res = lDao.createLibro(l);
 			l.addBiblioteca(b);
 			b.addLibro(l);
@@ -185,6 +187,8 @@ public class Gestione {
 			u.addPrestito(p);
 			l.addPrestito(p);
 			l.setCopieDisponibili(l.getCopieDisponibili()-1);
+			uDao.updateUtente(u);
+			lDao.updateLibro(l);
 			bDao.updateBiblioteca(b);
 			res = true;
 		}
@@ -192,7 +196,11 @@ public class Gestione {
 		return res;
 	}
 	
-	
-
+	public boolean restituisciLibro(Biblioteca b, String nome, String cognome, String titolo){
+		
+		boolean res = false;
+		
+		return res;
+	}
 
 }
