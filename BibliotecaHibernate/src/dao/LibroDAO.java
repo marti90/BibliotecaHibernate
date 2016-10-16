@@ -9,6 +9,35 @@ import utility.HibernateUtility;
 
 public class LibroDAO {
 	
+	//CREATE
+	public boolean createLibro(Libro l){
+			
+		boolean res = false;
+			
+		Session session = HibernateUtility.openSession();
+		Transaction tx = null;
+			
+		try{
+			tx = session.getTransaction();
+			tx.begin();
+				
+			session.persist(l);
+		
+			tx.commit();
+			res= true;
+				
+		}catch(Exception ex){
+			tx.rollback();
+				
+		}finally{
+			session.close();
+				
+		}
+			
+		return res;
+	}
+	
+	//READ con id
     public Libro readLibro(long id_libro){
 		
 		Libro l = null;
@@ -35,6 +64,7 @@ public class LibroDAO {
 		return l;
 	}
 	
+    //READ con titolo
 	public Libro readLibro(String titolo){
 		
 		Libro l = null;
@@ -64,33 +94,7 @@ public class LibroDAO {
 		return l;
 	}
 	
-	public boolean createLibro(Libro l){
-		
-		boolean res = false;
-		
-		Session session = HibernateUtility.openSession();
-		Transaction tx = null;
-		
-		try{
-			tx = session.getTransaction();
-			tx.begin();
-			
-			session.persist(l);
-			res= true;
-			
-			tx.commit();
-			
-		}catch(Exception ex){
-			tx.rollback();
-			
-		}finally{
-			session.close();
-			
-		}
-		
-		return res;
-	}
-	
+	//UPDATE
 	public boolean updateLibro(Libro l){
 
 		boolean res = false;
@@ -103,9 +107,9 @@ public class LibroDAO {
 			tx.begin();
 			
 			session.update(l);
-			res= true;
 			
 			tx.commit();
+			res= true;
 			
 		}catch(Exception ex){
 			tx.rollback();
@@ -119,6 +123,7 @@ public class LibroDAO {
 		
 	}
 	
+	//DELETE
 	public boolean deleteLibro(Libro l){
         
 		boolean res = false;
@@ -131,9 +136,9 @@ public class LibroDAO {
 			tx.begin();
 			
 			session.delete(l);
-			res= true;
 			
 			tx.commit();
+			res= true;
 			
 		}catch(Exception ex){
 			tx.rollback();

@@ -1,11 +1,5 @@
-
-
-import java.sql.Date;
-
 import model.Biblioteca;
-import model.Prestito;
 import model.Utente;
-//import model.Utente;
 import service.Gestione;
 
 
@@ -37,9 +31,9 @@ public class MainEsempio {
 		g.registraLibro(b, "Anna Karenina", "Lev Tolstoj",1);
 		g.registraLibro(b1, "Il processo", "Franz Kafka",2);
 		
-		Prestito p1 = g.prestaLibro(b, "Martina", "Debernardi", "Delitto e castigo");
-		Prestito p2 = g.prestaLibro(b, "Martina", "Debernardi", "Cent'anni di solitudine");
-		Prestito p3 = g.prestaLibro(b, "Martina", "Debernardi", "Anna Karenina");
+		g.prestaLibro(b, "Martina", "Debernardi", "Delitto e castigo");
+		g.prestaLibro(b, "Martina", "Debernardi", "Cent'anni di solitudine");
+		g.prestaLibro(b, "Martina", "Debernardi", "Anna Karenina");
 		
 		for(Utente u : b.getUtenti()){
 			System.out.println(u.getNome()+" "+u.getCognome());

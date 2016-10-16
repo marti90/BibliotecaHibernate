@@ -9,6 +9,35 @@ import model.Utente;
 
 public class UtenteDAO {
 	
+	//CREATE
+	public boolean createUtente(Utente u){
+			
+		boolean res = false;
+			
+		Session session = HibernateUtility.openSession();
+		Transaction tx = null;
+			
+		try{
+			tx = session.getTransaction();
+			tx.begin();
+				
+			session.persist(u);
+			
+			tx.commit();
+			res= true;
+			
+		}catch(Exception ex){
+			tx.rollback();
+				
+		}finally{
+			session.close();
+				
+		}
+			
+		return res;
+	}
+		
+	//READ con id
 	public Utente readUtente(long id_utente){
 		
 		Utente u = null;
@@ -35,6 +64,7 @@ public class UtenteDAO {
 		return u;
 	}
 	
+	//READ con nome e cognome
 	public Utente readUtente(String nome, String cognome){
 		
 		Utente u = null;
@@ -65,33 +95,7 @@ public class UtenteDAO {
 		return u;
 	}
 	
-	public boolean createUtente(Utente u){
-		
-		boolean res = false;
-		
-		Session session = HibernateUtility.openSession();
-		Transaction tx = null;
-		
-		try{
-			tx = session.getTransaction();
-			tx.begin();
-			
-			session.persist(u);
-			res= true;
-			
-			tx.commit();
-			
-		}catch(Exception ex){
-			tx.rollback();
-			
-		}finally{
-			session.close();
-			
-		}
-		
-		return res;
-	}
-	
+	//UPDATE
 	public boolean updateUtente(Utente u){
 
 		boolean res = false;
@@ -104,9 +108,10 @@ public class UtenteDAO {
 			tx.begin();
 			
 			session.update(u);
-			res= true;
 			
 			tx.commit();
+			res= true;
+			
 			
 		}catch(Exception ex){
 			tx.rollback();
@@ -120,6 +125,7 @@ public class UtenteDAO {
 		
 	}
 	
+	//DELETE
 	public boolean deleteUtente(Utente u){
         
 		boolean res = false;
@@ -132,9 +138,9 @@ public class UtenteDAO {
 			tx.begin();
 			
 			session.delete(u);
-			res= true;
 			
 			tx.commit();
+			res= true;
 			
 		}catch(Exception ex){
 			tx.rollback();
