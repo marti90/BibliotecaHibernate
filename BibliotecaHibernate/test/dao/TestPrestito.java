@@ -28,8 +28,7 @@ public class TestPrestito {
 	public void test2_readPrestito() {
 		Date d = new Date();
 		java.sql.Date dSql = new java.sql.Date(d.getTime());
-		Prestito p = new Prestito(dSql);
-		assertEquals(p.getDataPrestito(), pDao.readPrestito(1).getDataPrestito());
+		assertEquals(dSql , pDao.readPrestito(1).getDataPrestito());
 	}
 	
 	@Test

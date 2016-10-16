@@ -21,16 +21,14 @@ public class TestLibro {
 	
 	@Test
 	public void test2_readLibro1() {
-		Libro l = new Libro("Cent'anni di solitudine", "Gabriel Garcia Marquez");
-		assertEquals(l.getTitolo(), lDao.readLibro("Cent'anni di solitudine").getTitolo());
-		assertEquals(l.getAutore(), lDao.readLibro("Cent'anni di solitudine").getAutore());
+		assertEquals("Cent'anni di solitudine", lDao.readLibro("Cent'anni di solitudine").getTitolo());
+		assertEquals("Gabriel Garcia Marquez", lDao.readLibro("Cent'anni di solitudine").getAutore());
 	}
 	
 	@Test
 	public void test3_readLibro2() {
-		Libro l = new Libro("Cent'anni di solitudine", "Gabriel Garcia Marquez");
-		assertEquals(l.getTitolo(), lDao.readLibro(1).getTitolo());
-		assertEquals(l.getAutore(), lDao.readLibro(1).getAutore());
+		assertEquals("Cent'anni di solitudine", lDao.readLibro(1).getTitolo());
+		assertEquals("Gabriel Garcia Marquez", lDao.readLibro(1).getAutore());
 	}
 	
 	@Test

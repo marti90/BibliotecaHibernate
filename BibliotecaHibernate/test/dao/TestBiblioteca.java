@@ -21,14 +21,12 @@ public class TestBiblioteca {
 	
 	@Test
 	public void test2_readBiblioteca1() {
-		Biblioteca b = new Biblioteca("Biblioteca Politecnico");
-		assertEquals(b.getNome(), bDao.readBiblioteca("Biblioteca Politecnico").getNome());
+		assertEquals("Biblioteca Politecnico", bDao.readBiblioteca("Biblioteca Politecnico").getNome());
 	}
 	
 	@Test
 	public void test3_readBiblioteca2() {
-		Biblioteca b = new Biblioteca("Biblioteca Politecnico");
-		assertEquals(b.getNome(), bDao.readBiblioteca(1).getNome());
+		assertEquals("Biblioteca Politecnico", bDao.readBiblioteca(1).getNome());
 		
 	}
 	
