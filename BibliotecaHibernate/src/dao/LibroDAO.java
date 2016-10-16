@@ -9,7 +9,7 @@ import utility.HibernateUtility;
 
 public class LibroDAO {
 	
-public Libro readLibro(long id_libro){
+    public Libro readLibro(long id_libro){
 		
 		Libro l = null;
 		

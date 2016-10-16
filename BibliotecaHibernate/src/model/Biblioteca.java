@@ -103,5 +103,9 @@ public class Biblioteca {
 	public void addPrestito(Prestito p){
 		this.prestitiB.add(p);
 	}
+	
+	public void deletePrestito(Prestito p){
+		this.prestitiB.remove(p);
+	}
 
 }
