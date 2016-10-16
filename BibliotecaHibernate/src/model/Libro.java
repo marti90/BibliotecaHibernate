@@ -102,5 +102,9 @@ public class Libro {
 	public void addPrestito(Prestito p){
 		this.prestitiL.add(p);
 	}
+	
+	public void deletePrestito(Prestito p){
+		this.prestitiL.remove(p);
+	}
 
 }

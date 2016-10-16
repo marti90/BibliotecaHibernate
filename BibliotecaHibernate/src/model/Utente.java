@@ -94,5 +94,9 @@ public class Utente {
 	public void addPrestito(Prestito p){
 		this.prestitiU.add(p);
 	}
+	
+	public void deletePrestito(Prestito p){
+		this.prestitiU.remove(p);
+	}
 
 }

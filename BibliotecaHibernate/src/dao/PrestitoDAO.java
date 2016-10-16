@@ -1,7 +1,9 @@
 package dao;
 
+import java.sql.Date;
 import model.Prestito;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,6 +23,35 @@ public class PrestitoDAO {
 			tx.begin();
 			
 			p = session.get(Prestito.class, id_prestito);
+			
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();
+			
+		}finally{
+			session.close();
+			
+		}
+		
+		return p;
+	}
+    
+    public Prestito readPrestito(Date dataPrestito){
+		
+		Prestito p = null;
+		
+		Session session = HibernateUtility.openSession();
+        Transaction tx = null;
+        Query query = null;
+		
+		try{
+			tx = session.getTransaction();
+			tx.begin();
+			
+			query = session.createQuery("from Libro where dataPrestito =:dataInserita");
+			query.setDate("dataInserita", dataPrestito);
+			p = (Prestito) query.uniqueResult();
 			
 			tx.commit();
 			
